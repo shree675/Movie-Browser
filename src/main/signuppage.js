@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -11,6 +10,8 @@ import {withStyles} from '@material-ui/core/styles';
 import ButtonAppBar from './Navbar';
 import axios from 'axios';
 import {Component} from 'react';
+// import {aesjs} from 'aes-js';
+var aesjs=require('aes-js');
 
 const styles = (theme) => ({
   paper: {
@@ -72,7 +73,7 @@ class LoginPage extends Component{
         });
     }
 
-    onChangePassword(e){
+    onChangePassword(e){        
         this.setState({
             password: e.target.value
         });
@@ -81,26 +82,42 @@ class LoginPage extends Component{
     async signupsubmit(e){
         e.preventDefault();
 
+        var arr=[];
+        arr.push(12);
+
+        var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+        var passwordBytes = aesjs.utils.utf8.toBytes(this.state.password);
+        var aesCtr = new aesjs.ModeOfOperation.ctr(key,new aesjs.Counter(4));
+        var encryptedBytes = aesCtr.encrypt(passwordBytes);
+        var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+
         const user={
             username: this.state.username,
-            password: this.state.password
+            password: encryptedHex
+        }
+
+        const pref={
+            username: this.state.username,
+            genre: arr
         }
 
         var x=0;
 
         for(var i=0;i<this.state.users.length;i++){
-            if(this.state.users[i]===user.username){
+            if(this.state.users[i]===user.username || this.state.passwords[i]===user.password){
                 this.setState({
                     y: 1
                 });
                 x=1
-                // console.log('username already exists');
                 break;
             }
         }
 
         if(x===0){
             await axios.post('http://localhost:5000/signin/createuser',user).then(res=>console.log(''));
+            await axios.post('http://localhost:5000/pref/createpreference',pref).then(res=>console.log(''));
+            window.name=this.state.username;
             window.location='/browse';
         }
 
@@ -185,7 +202,7 @@ class LoginPage extends Component{
             </div>
             {(this.state.y===0)?(null):(
                 <div style={{color: `tomato`, textAlign: `center`, marginTop: `10px`}}>
-                    This username already exists. Please use a different username
+                    This username/password already exists. Please use different username/password
                 </div>
             )}
             </Container>

@@ -40,6 +40,20 @@
     color: tomato;
 }
 
+#update-genre-successful {
+    display: none;
+    font-size: 14px;
+    color: lightgreen;
+    margin: 10px;
+}
+
+#update-genre {
+    display: none;
+    font-size: 14px;
+    color: tomato;
+    margin: 10px;
+}
+
 #default {
     display: block;
 }
@@ -54,4 +68,37 @@
     width: 100%;
     text-align: center;
     color: #acacac;
+}
+
+.checkboxes {
+    text-align: center;
+    /* width: 300px; */
+    /* margin-left: 600px; */
+    /* margin-right: 600px; */
+    font-family: sans-serif;
+}
+
+table {
+    text-align: center;
+    /* border: 1px solid black; */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+.genre-movies {
+    position: absolute;
+    top: 520px;
+    /* left: 100px; */
+    /* right: auto; */
+    width: 100%;
+    text-align: center;    
+}
+
+.top-picks {
+    text-align: left;
+    margin: 15px;
+    font-size: 32px;
+    color: #acacac;
+    margin-bottom: 20px;
 }

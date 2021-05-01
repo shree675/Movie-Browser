@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
-const UserSchema=new Schema({
+const PreferenceSchema=new Schema({
     username: {
         type: String,
         minlength: 1,
@@ -9,17 +9,12 @@ const UserSchema=new Schema({
         trim: true,
         unique: true,
     },
-    password: {
-        type: String,
-        minlength: 1,
+    genre: {
+        type: Array,
         required: true,
-        unique: false
     }
-},
-{
-    timestamps: true,
 });
 
-const User=mongoose.model('User',UserSchema);
+const Preference=mongoose.model('Preference',PreferenceSchema);
 
-module.exports=User;
+module.exports=Preference;

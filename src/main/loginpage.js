@@ -12,6 +12,8 @@ import ButtonAppBar from './Navbar';
 import axios from 'axios';
 import {Component} from 'react';
 
+var aesjs=require('aes-js');
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -82,6 +84,8 @@ class LoginPage extends Component{
     submit(e){
         e.preventDefault();
 
+        var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
         const user={
             username: this.state.username,
             password: this.state.password
@@ -96,11 +100,16 @@ class LoginPage extends Component{
                 this.setState({
                     x: 1
                 });
-                if(this.state.passwords[i]===user.password){
+
+                var passwordBytes = aesjs.utils.utf8.toBytes(user.password);
+                var aesCtr = new aesjs.ModeOfOperation.ctr(key,new aesjs.Counter(4));
+                var encryptedBytes = aesCtr.encrypt(passwordBytes);
+                var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+
+                if(this.state.passwords[i]===encryptedHex){
                     this.setState({
                         successfulLogin: true
                     });
-                    // console.log('successful login');
                     window.name=this.state.username;
                     window.location='/browse';
                 }
@@ -108,14 +117,9 @@ class LoginPage extends Component{
                     this.setState({
                         successfulLogin: false
                     });
-                    // console.log('Incorrect username/password');
                 }
                 break;
             }
-        }
-
-        if(this.state.x===0){
-            // console.log('This username does not exist. Please sign up');
         }
 
     }

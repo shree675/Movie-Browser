@@ -2,9 +2,7 @@ import {Component} from 'react';
 import './mainpage.css';
 import axios from 'axios';
 import ButtonAppBar from './Navbar';
-import AwesomeSlider from 'react-awesome-slider';
-// import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
-import 'react-awesome-slider/dist/styles.css';
+import movieicon from '../Assets/movieicon.svg';
 
 class StartPage extends Component {
 
@@ -25,23 +23,19 @@ class StartPage extends Component {
 
     }
 
-    // async componentDidMount(){
-        // await fetch(this.state.base_url+this.state.popular+this.state.api_key).then(res=>res.json()).then(data=>{
-        //     this.setState({
-        //         popular_results: data.results.map((e)=>e)
-        //     });
-        // });
-        // console.log(this.state.popular_results);
-    // };
-
     render(){
         return (
             <div style={{width: `100%`}}>
 
                 <ButtonAppBar />                        
 
-                <div>
-                    this is the start page
+                <div style={{textAlign: `center`}}>
+                    <img src={movieicon} height="250px"></img>
+                    <br></br>
+                    <div style={{fontSize: `30px`, fontWeight: `bold`, color: `#acacac`}}>Welcome to Movie Browser</div>
+                    <div style={{fontSize: `18px`, color: `#acacac`, paddingTop: `28px`, paddingLeft: `100px`, paddingRight: `100px`}}>Get started by clicking on LOGIN</div>
+                    <div style={{fontSize: `18px`, color: `#acacac`, padding: `5px`, paddingLeft: `100px`, paddingRight: `100px`}}>If this is your first time, then sign up for Movie Browser by clicking on SIGN UP</div>
+                    <div style={{fontSize: `18px`, color: `#acacac`, padding: `0px`, paddingLeft: `100px`, paddingRight: `100px`}}>You can change your prefernces in the Settings page upon login</div>
                 </div>
 
             </div>

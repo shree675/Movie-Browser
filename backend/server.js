@@ -17,8 +17,10 @@ connection.once('open', ()=>{
 });
 
 const userRouter=require('./routes/user');
+const prefRouter=require('./routes/preference');
 
 app.use('/',userRouter);
+app.use('/pref',prefRouter);
 
 app.listen(port, ()=>{
     console.log('Server is running on port: ',port);

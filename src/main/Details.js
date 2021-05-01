@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import './Details.css';
+import Link from '@material-ui/core/Link';
 
 class DetailsPage extends Component{
 
@@ -14,6 +15,7 @@ class DetailsPage extends Component{
             language: '',
             prd_img: '',
             prd: '',
+            link: '',
         }
 
     }
@@ -26,29 +28,40 @@ class DetailsPage extends Component{
         });
         console.log(this.state.details);
         this.setState({
-            language: this.state.details.spoken_languages.length>0?(this.state.details.spoken_languages[0].english_name):('NA'),
-            prd: this.state.details.production_companies.length>0?(this.state.details.production_companies[0].name):('NA'),
-            prd_img: this.state.details.production_companies.length>0?(this.state.details.production_companies[0].url):(''),
+            language: this.state.spoken_languages!==null && this.state.details.spoken_languages.length>0?(this.state.details.spoken_languages[0].english_name):('NA'),
+            prd: this.state.production_companies!==null && this.state.details.production_companies.length>0?(this.state.details.production_companies[0].name):('NA'),
+            prd_img: this.state.production_companies!==null && this.state.details.production_companies.length>0?(this.state.img_url+this.state.details.production_companies[0].logo_path):(''),
+            link: this.state.homepage!==null && this.state.details.homepage.length>0?(this.state.details.homepage):('')
         });
     }
 
     render(){
         
         return (
+            <div className="outside">
             <div className="main-content">
                 <div className="title-movie">{this.state.details.original_title}</div>
-                <img src={this.state.img_url+this.state.details.backdrop_path} height="500px"></img>
-                <div className="tagline">{this.state.details.tagline}</div>
-                <div className="release-date">{this.state.details.release_date}</div>
-                <div className="points-override">{this.state.details.vote_average}</div>                
-                <div>Language: {this.state.language}</div>
-                <div className="budget">Budget: {this.state.details.budget===0?('NA'):('$'+this.state.details.budget)}</div>
-                <div className="budget">Revenue: {this.state.details.revenue===0?('NA'):('$'+this.state.details.revenue)}</div>
-                <div className="production">
-                    Production: {this.state.prd}
-                    <img src={this.state.prd_img}></img>
+                <div  style={{textAlign: `center`}}><img src={this.state.img_url+this.state.details.backdrop_path} height="400px"></img></div>
+                <div className="tagline"><em>'{this.state.details.tagline}'</em></div>
+                <div className="points-override">{this.state.details.vote_average}</div>
+                <br />
+                <div className="release-date">Release Date: <span style={{color: `white`}}>{this.state.details.release_date}</span></div>                             
+                <br></br>
+                <div className="release-date">Language: <span style={{color: `white`}}>{this.state.language}</span></div>
+                <div className="release-date">Budget: <span style={{color: `white`}}>{this.state.details.budget===0?('NA'):('$'+this.state.details.budget)}</span></div>
+                <div className="release-date">Revenue: <span style={{color: `white`}}>{this.state.details.revenue===0?('NA'):('$'+this.state.details.revenue)}</span></div>
+                <div className="release-date">
+                    <div>Production: <span style={{color: `white`}}>{this.state.prd}</span></div>
+                    <div style={{marginTop: `10px`, marginBottom: `10px`}}><img src={this.state.prd_img} height="50px"></img></div>
                 </div>
-                <div className="overview">Overview: {this.state.details.overview}</div>
+                <br></br>
+                <div className="release-date">Official Website: {this.state.link!==''?(<Link href={this.state.link} target="_blank">{this.state.link}</Link>):('NA')}</div>
+                <br></br>
+                <br></br>
+                <hr style={{height: `0px`, fontSize: `200px`, width: `90%`, marginBottom: `-60px`}}></hr>
+                <div className="overview"><span style={{color: `#acacac`, fontSize: `28px`}}>Overview: <br /></span>{this.state.details.overview}</div>
+                <br></br><br></br>
+                </div>
             </div>
         );
 

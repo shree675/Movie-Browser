@@ -1,4 +1,60 @@
+.outside {
+    background-color: lightseagreen;
+    opacity: 0.8;
+    margin: 0px;
+}
+
 .main-content {
-    text-align: center;
+    /* text-align: center; */
     color: white;
+    border: 1px solid lightseagreen;
+    margin: 8px;
+    background-color: #282c34;
+}
+
+.title-movie {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 40px;
+    margin: 10px;
+    text-align: center;
+}
+
+.tagline {
+    font-size: 18px;
+    margin: 10px;
+    color: orange;
+    text-align: center;
+    padding: 10px;
+}
+
+.release-date {
+    float: left;   
+    margin: 5px; 
+    margin-left: 80px;
+    width: 90%;
+    color: #acacac;
+    margin-right: 80px;
+}
+
+.points-override {
+    color: rgb(3, 63, 100);
+    background-color: lightsteelblue;
+    float: left;
+    padding-right: 2px;
+    padding-left: 2px;
+    font-weight: bold;
+    border-radius: 2px 2px 2px 2px;
+    padding-top: 0px;
+    margin-left: 80px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.overview {
+    color: white;
+    font-size: 20px;
+    /* margin-right: 80px; */
+    /* margin-left: 80px; */
+    /* overflow: auto; */
+    padding: 80px;
 }

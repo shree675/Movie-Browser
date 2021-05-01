@@ -9,6 +9,27 @@ import SearchAppBar from './Searchbar';
 import usericon from '../Assets/usericon.svg';
 import Link from '@material-ui/core/Link';
 import Template from './Template';
+import Carousel2 from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
 
 class MainPage extends Component{
 
@@ -22,11 +43,19 @@ class MainPage extends Component{
             passwords: [],
             searchquery: '',
             base_url: 'https://api.themoviedb.org/3',
-            api_key: '&api_key=a39afca7618243991f7cf64e46955ba5',
-            popular: '/discover/movie?sort_by=popularity.desc',
+            api_key: '?api_key=a39afca7618243991f7cf64e46955ba5',
+            upcoming: '/movie/upcoming',
             img_url: 'https://image.tmdb.org/t/p/w500',
             popular_results: [],
-            movies: []
+            movies: [],
+            actmovies: [],
+            advmovies: [],
+            commovies: [],
+            fammovies: [],
+            hormovies: [],
+            scfmovies: [],
+            prefgens: [],
+            prefmovies: [],
         }
 
         this.onChangeSearchMain=this.onChangeSearchMain.bind(this);
@@ -34,11 +63,70 @@ class MainPage extends Component{
     }
 
     async componentDidMount(){
-        await fetch(this.state.base_url+this.state.popular+this.state.api_key).then(res=>res.json()).then(data=>{
+        await fetch(this.state.base_url+this.state.upcoming+this.state.api_key+'&language=en-US&page=1').then(res=>res.json()).then(data=>{
             this.setState({
                 popular_results: data.results.map((e)=>e)
             });
-        });    
+        });
+        await axios.get('http://localhost:5000/pref/allpreferences').then((e)=>{
+            e.data.map(user=>{
+                if(user.username===this.state.username){                    
+                    this.setState({
+                        prefgens: user.genre
+                    });
+                }
+            })
+        });
+
+        for(var i=0;i<this.state.prefgens.length;i++){
+            if(this.state.prefgens[i]===28){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'28').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        actmovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+            else if(this.state.prefgens[i]===12){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'12').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        advmovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+            else if(this.state.prefgens[i]===35){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'35').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        commovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+            else if(this.state.prefgens[i]===10751){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'10751').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        fammovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+            else if(this.state.prefgens[i]===27){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'27').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        hormovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+            else if(this.state.prefgens[i]===878){
+                await fetch(this.state.base_url+'/discover/movie'+this.state.api_key+'&with_genres='+'878').then(res=>res.json()).then(data=>{
+                    this.setState({
+                        scfmovies: data.results.map((e)=>e)
+                    });
+                });
+            }
+        }
+
+        this.setState({
+            prefmovies: this.state.actmovies.concat(this.state.advmovies,this.state.commovies,this.state.fammovies,this.state.hormovies,this.state.scfmovies)
+        });
+
     };
 
     async onChangeSearchMain(props){
@@ -72,6 +160,7 @@ class MainPage extends Component{
 
                 <div id="default">
 
+                <div>
                 <div className="welcome-user">
                     <div>
                         <img src={usericon}></img>
@@ -88,11 +177,14 @@ class MainPage extends Component{
                         <Link href="/usersettings"> Settings</Link>
                     </div>
 
+                    <br></br>
+                    <br></br>
+
                 </div>                                        
 
                 <div className="card">
 
-                <div className="most-popular">Popular Movies</div>
+                <div className="most-popular">Upcoming Movies</div>
                 
                 {(this.state.popular_results.length>0)?(
                     <Carousel
@@ -103,11 +195,24 @@ class MainPage extends Component{
                     className="card"                       
                     >
                     {this.state.popular_results.map((e)=>(
-                        <Card moviename={e.original_title} image={this.state.img_url+e.backdrop_path} />
+                        <Card moviename={e.original_title} image={this.state.img_url+e.backdrop_path} id={e.id} />
                     ))}
                     </Carousel>
                 ):(null)}
-                
+                </div>
+
+                </div>
+
+                <div className="genre-movies">
+                    <div className="top-picks">Movies Picked For You:</div>
+                <Carousel2
+                responsive={responsive}
+                centerMode={true}
+                >
+                {this.state.prefmovies.map((e)=>(
+                    <Template image={this.state.img_url+e.backdrop_path} title={e.original_title} points={e.vote_average} date={e.release_date} id={e.id} />
+                ))}
+                </Carousel2>
                 </div>
 
             </div>

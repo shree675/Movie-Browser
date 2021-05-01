@@ -64,12 +64,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar(props) {
+var val='';
 
-  // props.onChangeSearchMain('a');
+export default function SearchAppBar(props) {
 
     function onChangeSearch(e){
       props.onChangeSearchMain(e.target.value);
+    }
+
+    function onClear(e){
+      props.onChangeSearchMain('');
+      val='';
     }
 
   const classes = useStyles();
@@ -80,7 +85,7 @@ export default function SearchAppBar(props) {
         <Toolbar>
           <Typography className={classes.title} variant="h4" noWrap>
             Browse Movies
-          </Typography>
+          </Typography>          
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -92,9 +97,11 @@ export default function SearchAppBar(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              // value={val}
               onChange={onChangeSearch}
             />
           </div>  
+          <Button onClick={onClear} color="inherit" style={{marginLeft: `10px`}}>Clear Search</Button>
             <Link href="/usersettings" style={{textDecoration: `none`, color: `white`}}>
                 <Button color="inherit" style={{marginLeft: `10px`}}>Settings</Button>
             </Link>        

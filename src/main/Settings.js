@@ -3,20 +3,13 @@ import SimpleNavbar from './SimpleNavbar';
 import axios from 'axios';
 import usericon from '../Assets/usericon.svg';
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Checkbox from '@material-ui/core/Checkbox';
 import {withStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ButtonAppBar from './Navbar';
 import './mainpage.css';
+
+var aesjs=require('aes-js');
 
 const styles = (theme) => ({
     paper: {
@@ -64,11 +57,26 @@ class Settings extends Component{
             base_url: 'https://api.themoviedb.org/3',
             api_key: '?api_key=a39afca7618243991f7cf64e46955ba5',
             language: '&language=en-US',
-            currentGenre: 0
+            currentGenre: 0,
+            act: false,
+            adv: false,
+            com: false,
+            fam: false,
+            hor: false,
+            scf: false,
+            genid: '',
+            genarr: [],
         }
 
         this.changePassword=this.changePassword.bind(this);
         this.onChangePassword=this.onChangePassword.bind(this);
+        this.updateGenres=this.updateGenres.bind(this);
+        this.updateAct=this.updateAct.bind(this);
+        this.updateAdv=this.updateAdv.bind(this);
+        this.updateCom=this.updateCom.bind(this);
+        this.updateFam=this.updateFam.bind(this);
+        this.updateHor=this.updateHor.bind(this);
+        this.updateScf=this.updateScf.bind(this);
 
     }
 
@@ -83,13 +91,50 @@ class Settings extends Component{
                 }
             })
         });
-        
-        await fetch(this.state.base_url+this.state.genre+this.state.api_key+this.state.language).then(res=>res.json()).then(data=>{
-            this.setState({
-                genres: data.genres.map((e)=>e)
-            });
+
+        await axios.get('http://localhost:5000/pref/allpreferences').then((e)=>{
+            e.data.map(user=>{
+                if(user.username===this.state.username){                    
+                    this.setState({
+                        genid: user._id,
+                        genres: user.genre
+                    });
+                }
+            })
         });
-        console.log(this.state.genres);
+        
+        for(var i=0;i<this.state.genres.length;i++){
+            if(this.state.genres[i]===28){
+                this.setState({
+                    act: true
+                });
+            }
+            else if(this.state.genres[i]===12){
+                this.setState({
+                    adv: true
+                });
+            }
+            else if(this.state.genres[i]===35){
+                this.setState({
+                    com: true
+                });
+            }
+            else if(this.state.genres[i]===10751){
+                this.setState({
+                    fam: true
+                });
+            }
+            else if(this.state.genres[i]===27){
+                this.setState({
+                    hor: true
+                });
+            }
+            if(this.state.genres[i]===878){
+                this.setState({
+                    scf: true
+                });
+            }
+        }
 
     }
 
@@ -102,9 +147,16 @@ class Settings extends Component{
     changePassword(e){
         e.preventDefault();
 
+        var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+        var passwordBytes = aesjs.utils.utf8.toBytes(this.state.password);
+        var aesCtr = new aesjs.ModeOfOperation.ctr(key,new aesjs.Counter(4));
+        var encryptedBytes = aesCtr.encrypt(passwordBytes);
+        var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+
         const user={
             username: this.state.username,
-            password: this.state.password
+            password: encryptedHex
         }        
 
         axios.post('http://localhost:5000/update/'+this.state.id,user).then(res=>{
@@ -121,6 +173,79 @@ class Settings extends Component{
 
     }
 
+    async updateGenres(){
+
+        var arr=new Array();
+
+        if(this.state.act===true){
+            arr.push(28);
+        }
+        if(this.state.adv===true){
+            arr.push(12);
+        }
+        if(this.state.com===true){
+            arr.push(35);
+        }
+        if(this.state.fam===true){
+            arr.push(10751);
+        }
+        if(this.state.hor===true){
+            arr.push(27);
+        }
+        if(this.state.scf===true){
+            arr.push(878);
+        }
+
+        const pref={
+            username: this.state.username,
+            genre: arr
+        }
+
+        await axios.post('http://localhost:5000/pref/update/'+this.state.genid,pref).then(res=>{
+            document.getElementById("update-genre-successful").style.display="block";
+            document.getElementById("update-genre").style.display="none";
+        }).catch((err)=>{
+            document.getElementById("update-genre-successful").style.display="none";
+            document.getElementById("update-genre").style.display="block";
+        });
+    }
+
+    updateAct(){
+        this.setState({
+            act: !this.state.act
+        });
+    }
+    
+    updateAdv(){
+        this.setState({
+            adv: !this.state.adv
+        });
+    }
+    
+    updateFam(){
+        this.setState({
+            fam: !this.state.fam
+        });
+    }
+
+    updateHor(){
+        this.setState({
+            hor: !this.state.hor
+        });
+    }
+
+    updateCom(){
+        this.setState({
+            com: !this.state.com
+        });
+    }
+
+    updateScf(){
+        this.setState({
+            scf: !this.state.scf
+        });
+    }
+
     render(){
 
         const {classes} = this.props;
@@ -128,7 +253,7 @@ class Settings extends Component{
         return (
             <div>                
                 <SimpleNavbar />
-                <div style={{textAlign: `center`}}>
+                <div style={{textAlign: `center`, width: `100%`}}>
                 <div className="welcome-user-settings">
                     <div>
                         <img src={usericon}></img>
@@ -176,29 +301,102 @@ class Settings extends Component{
                     Change
                 </Button>
                 <span id="update-password-successful"> Password Updated Successfully!</span>
-                <span id="update-password">Some error occurred</span>
+                <span id="update-password">Some error occurred. Please try a different password</span>
                 </span>                                
                 </form>
 
-                <form className={classes.form} noValidate>
-                <span style={{fontSize: `18px`}}>  
-                Genre:        
-                <Select
-                // value={this.state.currentGenre}
-                // onChange={handleChange}
-                label="Family"
-                // displayEmpty
-                className={classes.selectEmpty}
-                >
-                <MenuItem value="Family">
-                    <em>Family</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-                </span>                                
-                </form>
+                <div className="checkboxes">
+                    <br></br>
+                    <div style={{fontSize: `20px`, color: `grey`}}>Pick your preferred Genre:</div>
+                    
+                    <table>
+                        <tr>
+                            <td style={{textAlign: `right`}}>Action</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.act}
+                                onChange={this.updateAct}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style={{textAlign: `right`}}>Adventure</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.adv}
+                                onChange={this.updateAdv}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style={{textAlign: `right`}}>Comedy</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.com}
+                                onChange={this.updateCom}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style={{textAlign: `right`}}>Family</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.fam}
+                                onChange={this.updateFam}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style={{textAlign: `right`}}>Horror</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.hor}
+                                onChange={this.updateHor}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style={{textAlign: `right`}}>Science Fiction</td>
+                            <td style={{textAlign: `left`}}>
+                            <Checkbox
+                                checked={this.state.scf}
+                                onChange={this.updateScf}
+                                name="checkedB"
+                                color="primary"
+                            />
+                            </td>
+                        </tr>
+                        
+                    </table>
+
+                    <Button
+                    type="submit"
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={this.updateGenres}
+                    >
+                    Update
+                    </Button>
+
+                    <span id="update-genre-successful"> Preferences Updated Successfully!</span>
+                    <span id="update-genre">Some error occurred</span>
+
+                </div>
 
                 </div>
             </div>
@@ -209,3 +407,23 @@ class Settings extends Component{
 }
 
 export default withStyles(styles, {withTheme: true})(Settings);
+
+// 0: {id: 28, name: "Action"}
+// 1: {id: 12, name: "Adventure"}
+// 2: {id: 16, name: "Animation"}
+// 3: {id: 35, name: "Comedy"}
+// 4: {id: 80, name: "Crime"}
+// 5: {id: 99, name: "Documentary"}
+// 6: {id: 18, name: "Drama"}
+// 7: {id: 10751, name: "Family"}
+// 8: {id: 14, name: "Fantasy"}
+// 9: {id: 36, name: "History"}
+// 10: {id: 27, name: "Horror"}
+// 11: {id: 10402, name: "Music"}
+// 12: {id: 9648, name: "Mystery"}
+// 13: {id: 10749, name: "Romance"}
+// 14: {id: 878, name: "Science Fiction"}
+// 15: {id: 10770, name: "TV Movie"}
+// 16: {id: 53, name: "Thriller"}
+// 17: {id: 10752, name: "War"}
+// 18: {id: 37, name: "Western"}
