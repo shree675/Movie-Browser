@@ -10,7 +10,7 @@ import {withStyles} from '@material-ui/core/styles';
 import ButtonAppBar from './Navbar';
 import axios from 'axios';
 import {Component} from 'react';
-// import {aesjs} from 'aes-js';
+
 var aesjs=require('aes-js');
 
 const styles = (theme) => ({
@@ -59,7 +59,7 @@ class LoginPage extends Component{
     }
 
     async componentDidMount(){
-        await axios.get('http://localhost:5000/login/submituser').then((e)=>{
+        await axios.get('/login/submituser').then((e)=>{
             this.setState({
                 users: e.data.map(user=>user.username),
                 passwords: e.data.map(user=>user.password)
@@ -115,8 +115,8 @@ class LoginPage extends Component{
         }
 
         if(x===0){
-            await axios.post('http://localhost:5000/signin/createuser',user).then(res=>console.log(''));
-            await axios.post('http://localhost:5000/pref/createpreference',pref).then(res=>console.log(''));
+            await axios.post('/signin/createuser',user).then(res=>console.log(''));
+            await axios.post('/pref/createpreference',pref).then(res=>console.log(''));
             window.name=this.state.username;
             window.location='/browse';
         }

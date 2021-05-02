@@ -78,7 +78,7 @@ class Settings extends Component{
 
     async componentDidMount(){
 
-        await axios.get('http://localhost:5000/login/submituser').then((e)=>{
+        await axios.get('/login/submituser').then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
                     this.setState({
@@ -88,7 +88,7 @@ class Settings extends Component{
             })
         });
 
-        await axios.get('http://localhost:5000/pref/allpreferences').then((e)=>{
+        await axios.get('/pref/allpreferences').then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
                     this.setState({
@@ -155,7 +155,7 @@ class Settings extends Component{
             password: encryptedHex
         }        
 
-        axios.post('http://localhost:5000/update/'+this.state.id,user).then(res=>{
+        axios.post('/update/'+this.state.id,user).then(res=>{
             document.getElementById("update-password-successful").style.display="block";
             document.getElementById("update-password").style.display="none";
         }).catch((err)=>{
@@ -197,7 +197,7 @@ class Settings extends Component{
             genre: arr
         }
 
-        await axios.post('http://localhost:5000/pref/update/'+this.state.genid,pref).then(res=>{
+        await axios.post('/pref/update/'+this.state.genid,pref).then(res=>{
             document.getElementById("update-genre-successful").style.display="block";
             document.getElementById("update-genre").style.display="none";
         }).catch((err)=>{

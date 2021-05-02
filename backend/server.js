@@ -16,6 +16,10 @@ connection.once('open', ()=>{
     console.log('MongoDB connection established successfully');
 });
 
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static('build'));
+}
+
 const userRouter=require('./routes/user');
 const prefRouter=require('./routes/preference');
 const apiRouter=require('./routes/api');

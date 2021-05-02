@@ -61,7 +61,7 @@ class LoginPage extends Component{
     }
 
     async componentDidMount(){
-        await axios.get('http://localhost:5000/login/submituser').then((e)=>{
+        await axios.get('/login/submituser').then((e)=>{
             this.setState({
                 users: e.data.map(user=>user.username),
                 passwords: e.data.map(user=>user.password)

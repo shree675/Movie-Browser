@@ -23,7 +23,7 @@ class DetailsPage extends Component{
 
     async componentDidMount(){
 
-        await axios.get('http://localhost:5000/api/getapi').then((e)=>{
+        await axios.get('/api/getapi').then((e)=>{
             this.setState({
                 api_key: ('?'+e.data[0].api)
             });
