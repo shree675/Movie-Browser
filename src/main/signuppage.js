@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 import ButtonAppBar from './Navbar';
+import config from '../config';
 import axios from 'axios';
 import {Component} from 'react';
 
@@ -39,7 +40,7 @@ const styles = (theme) => ({
   },
 });
 
-class LoginPage extends Component{
+class SignupPage extends Component{
 
     constructor(props){
         super(props);
@@ -59,7 +60,7 @@ class LoginPage extends Component{
     }
 
     async componentDidMount(){
-        await axios.get('/login/submituser').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/login/submituser`).then((e)=>{
             this.setState({
                 users: e.data.map(user=>user.username),
                 passwords: e.data.map(user=>user.password)
@@ -115,8 +116,8 @@ class LoginPage extends Component{
         }
 
         if(x===0){
-            await axios.post('/signin/createuser',user).then(res=>console.log(''));
-            await axios.post('/pref/createpreference',pref).then(res=>console.log(''));
+            await axios.post(`${config.config.SERVER_URI}/signin/createuser`,user).then(res=>console.log(''));
+            await axios.post(`${config.config.SERVER_URI}/pref/createpreference`,pref).then(res=>console.log(''));
             window.name=this.state.username;
             window.location='/browse';
         }
@@ -214,4 +215,4 @@ class LoginPage extends Component{
 
 }
 
-export default withStyles(styles, { withTheme: true })(LoginPage);
+export default withStyles(styles, {withTheme: true})(SignupPage);

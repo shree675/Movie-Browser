@@ -11,6 +11,7 @@ import {withStyles} from '@material-ui/core/styles';
 import ButtonAppBar from './Navbar';
 import axios from 'axios';
 import {Component} from 'react';
+import config from '../config';
 
 var aesjs=require('aes-js');
 
@@ -61,7 +62,7 @@ class LoginPage extends Component{
     }
 
     async componentDidMount(){
-        await axios.get('/login/submituser').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/login/submituser`).then((e)=>{
             this.setState({
                 users: e.data.map(user=>user.username),
                 passwords: e.data.map(user=>user.password)

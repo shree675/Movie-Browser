@@ -9,6 +9,7 @@ router.route('/login/submituser').get((req,res)=>{
 router.route('/signin/createuser').post((req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
+    // console.log(username);
     const user=new User({username,password});
     user.save().then(()=>res.json('Added new user!')).catch(err=>res.status(400).json('Error: ' + err));
 });

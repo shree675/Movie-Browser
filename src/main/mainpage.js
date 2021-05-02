@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link';
 import Template from './Template';
 import Carousel2 from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import config from '../config';
 
 const responsive = {
     superLargeDesktop: {
@@ -64,7 +65,7 @@ class MainPage extends Component{
 
     async componentDidMount(){
 
-        await axios.get('/api/getapi').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/api/getapi`).then((e)=>{
             this.setState({
                 api_key: ('?'+e.data[0].api)
             });
@@ -78,7 +79,7 @@ class MainPage extends Component{
             })
         );
         
-        await axios.get('/pref/allpreferences').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/pref/allpreferences`).then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
                     this.setState({

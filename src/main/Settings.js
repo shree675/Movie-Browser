@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import {withStyles} from '@material-ui/core/styles';
 import './mainpage.css';
+import config from '../config';
 
 var aesjs=require('aes-js');
 
@@ -78,7 +79,7 @@ class Settings extends Component{
 
     async componentDidMount(){
 
-        await axios.get('/login/submituser').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/login/submituser`).then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
                     this.setState({
@@ -88,7 +89,7 @@ class Settings extends Component{
             })
         });
 
-        await axios.get('/pref/allpreferences').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/pref/allpreferences`).then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
                     this.setState({
@@ -155,7 +156,7 @@ class Settings extends Component{
             password: encryptedHex
         }        
 
-        axios.post('/update/'+this.state.id,user).then(res=>{
+        axios.post(`${config.config.SERVER_URI}/update/`+this.state.id,user).then(res=>{
             document.getElementById("update-password-successful").style.display="block";
             document.getElementById("update-password").style.display="none";
         }).catch((err)=>{
@@ -197,7 +198,7 @@ class Settings extends Component{
             genre: arr
         }
 
-        await axios.post('/pref/update/'+this.state.genid,pref).then(res=>{
+        await axios.post(`${config.config.SERVER_URI}/pref/update/`+this.state.genid,pref).then(res=>{
             document.getElementById("update-genre-successful").style.display="block";
             document.getElementById("update-genre").style.display="none";
         }).catch((err)=>{

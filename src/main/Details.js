@@ -2,6 +2,7 @@ import {Component} from 'react';
 import './Details.css';
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
+import config from '../config';
 
 class DetailsPage extends Component{
 
@@ -23,7 +24,7 @@ class DetailsPage extends Component{
 
     async componentDidMount(){
 
-        await axios.get('/api/getapi').then((e)=>{
+        await axios.get(`${config.config.SERVER_URI}/api/getapi`).then((e)=>{
             this.setState({
                 api_key: ('?'+e.data[0].api)
             });
