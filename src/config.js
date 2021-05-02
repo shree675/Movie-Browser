@@ -3,8 +3,10 @@ const configs = {
     SERVER_URI: 'http://localhost:5000',
   },
   production: {
-    SERVER_URI: 'https://movieb-server.herokuapp.com',
+    SERVER_URI: 'http://localhost:5000',
   },
 };
+
+// https://movieb-server.herokuapp.com
   
 module.exports.config = configs[process.env.NODE_ENV];
