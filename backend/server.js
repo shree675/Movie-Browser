@@ -2,6 +2,7 @@ const cors=require('cors');
 const mongoose=require('mongoose');
 const express=require('express');
 require('dotenv').config();
+const path=require('path');
 
 const app=express();
 const port=process.env.PORT || 5000
@@ -18,9 +19,9 @@ connection.once('open', ()=>{
 
 if(process.env.NODE_ENV==='production'){
     app.use(express.static('build'));
-    // app.get("*", (req, res) => {
-    //     res.sendFile(path.resolve(__dirname,"build","index.html"));
-    // });
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname,"build","index.html"));
+    });
 }
 
 const userRouter=require('./routes/user');
