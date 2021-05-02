@@ -33,7 +33,7 @@ export default function ButtonAppBar() {
           <Typography variant="h4" className={classes.title}>
             Movie Browser
           </Typography>
-          <Link href="/login" style={{textDecoration: `none`, color: `white`}}>
+          <Link href="https://movie-browser-v2.herokuapp.com/login" style={{textDecoration: `none`, color: `white`}}>
           <Button classes={{root: classes.button}} color="inherit">Login</Button>
           </Link>
           <Link href="/signup" style={{textDecoration: `none`, color: `white`}}>
