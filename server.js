@@ -24,9 +24,9 @@ if(process.env.NODE_ENV==='production'){
     });
 }
 
-const userRouter=require('./routes/user');
-const prefRouter=require('./routes/preference');
-const apiRouter=require('./routes/api');
+const userRouter=require('./backend/routes/user');
+const prefRouter=require('./backend/routes/preference');
+const apiRouter=require('./backend/routes/api');
 
 app.use('/',userRouter);
 app.use('/pref',prefRouter);
