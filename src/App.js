@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={StartPage}></Route>
-        <Route exact path='https://movie-browser-v2.herokuapp.com/login' component={LoginPage}></Route>
+        <Route exact path='/login' component={LoginPage}></Route>
         <Route exact path='/signup' component={SignupPage}></Route>
         <Route exact path='/browse' component={MainPage}></Route>
         <Route exact path='/usersettings' component={Settings}></Route>
