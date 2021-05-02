@@ -43,7 +43,7 @@ class MainPage extends Component{
             passwords: [],
             searchquery: '',
             base_url: 'https://api.themoviedb.org/3',
-            api_key: '?api_key=a39afca7618243991f7cf64e46955ba5',
+            api_key: '',
             upcoming: '/movie/upcoming',
             img_url: 'https://image.tmdb.org/t/p/w500',
             popular_results: [],
@@ -63,11 +63,21 @@ class MainPage extends Component{
     }
 
     async componentDidMount(){
-        await fetch(this.state.base_url+this.state.upcoming+this.state.api_key+'&language=en-US&page=1').then(res=>res.json()).then(data=>{
+
+        await axios.get('http://localhost:5000/api/getapi').then((e)=>{
             this.setState({
-                popular_results: data.results.map((e)=>e)
+                api_key: ('?'+e.data[0].api)
             });
         });
+
+        (this.state.api_key==='')?(console.log()):(
+            await fetch(this.state.base_url+this.state.upcoming+this.state.api_key+'&language=en-US&page=1').then(res=>res.json()).then(data=>{
+                this.setState({
+                    popular_results: data.results.map((e)=>e)
+                });
+            })
+        );
+        
         await axios.get('http://localhost:5000/pref/allpreferences').then((e)=>{
             e.data.map(user=>{
                 if(user.username===this.state.username){                    
@@ -133,7 +143,6 @@ class MainPage extends Component{
         await this.setState({
             searchquery: props
         });
-        // console.log(this.state.searchquery);
         if(this.state.searchquery.length===0){
             document.getElementById("default").style.display="block";
             document.getElementById("search-results").style.display="none";
@@ -141,7 +150,7 @@ class MainPage extends Component{
         else{
             document.getElementById("default").style.display="none";
             document.getElementById("search-results").style.display="block";
-            await fetch('https://api.themoviedb.org/3/search/movie?api_key=a39afca7618243991f7cf64e46955ba5&language=en-US&query='+this.state.searchquery+'&page=1&include_adult=false').then(res=>res.json()).then(data=>{            
+            await fetch('https://api.themoviedb.org/3/search/movie'+this.state.api_key+'&language=en-US&query='+this.state.searchquery+'&page=1&include_adult=false').then(res=>res.json()).then(data=>{            
                 this.setState({
                     movies: data.results.map((e)=>e)
                 });

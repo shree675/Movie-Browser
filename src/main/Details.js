@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import './Details.css';
 import Link from '@material-ui/core/Link';
+import axios from 'axios';
 
 class DetailsPage extends Component{
 
@@ -9,7 +10,7 @@ class DetailsPage extends Component{
 
         this.state={
             id: props.match.params.id,
-            api_key: '?api_key=a39afca7618243991f7cf64e46955ba5',
+            api_key: '',
             details: [],
             img_url: 'https://image.tmdb.org/t/p/w500',
             language: '',
@@ -21,12 +22,18 @@ class DetailsPage extends Component{
     }
 
     async componentDidMount(){
+
+        await axios.get('http://localhost:5000/api/getapi').then((e)=>{
+            this.setState({
+                api_key: ('?'+e.data[0].api)
+            });
+        });
+
         await fetch('https://api.themoviedb.org/3/movie/'+this.state.id+this.state.api_key+'&language=en-US').then(res=>res.json()).then((e)=>{
             this.setState({
                 details: e
             });
         });
-        console.log(this.state.details);
         this.setState({
             language: this.state.spoken_languages!==null && this.state.details.spoken_languages.length>0?(this.state.details.spoken_languages[0].english_name):('NA'),
             prd: this.state.production_companies!==null && this.state.details.production_companies.length>0?(this.state.details.production_companies[0].name):('NA'),

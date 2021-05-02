@@ -1,27 +1,9 @@
 import {Component} from 'react';
 import './mainpage.css';
-import axios from 'axios';
 import ButtonAppBar from './Navbar';
 import movieicon from '../Assets/movieicon.svg';
 
 class StartPage extends Component {
-
-    constructor(props){
-        super(props);
-
-        this.state={
-            username: '',
-            password: '',
-            users: [],
-            passwords: [],
-            base_url: 'https://api.themoviedb.org/3',
-            api_key: '&api_key=a39afca7618243991f7cf64e46955ba5',
-            popular: '/discover/movie?sort_by=popularity.desc',
-            img_url: 'https://image.tmdb.org/t/p/w500',
-            popular_results: [],
-        }
-
-    }
 
     render(){
         return (
