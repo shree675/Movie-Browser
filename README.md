@@ -1,3 +1,11 @@
+<p>
+  <img src="https://img.shields.io/badge/react-v17.0.2-ff69b4">&emsp;
+  <img src="https://img.shields.io/badge/express-v4.17.1-orange">&emsp;
+  <img src="https://img.shields.io/badge/JavaScript-89.4%25-informational">&emsp;
+  <img src="https://img.shields.io/badge/database-mongodb-green">&emsp;
+  <img src="https://img.shields.io/badge/build-passing-brightgreen">&emsp;
+</p>
+
 # Movie-Browser
 
 ## About
@@ -36,6 +44,19 @@ This is a full MERN Stack app. The major tools & technologies used are:
 * The settings page hosts the functionality to change the user's password and genre preferences. These are then updated in the database as well.
 
 <img src="https://github.com/shree675/Movie-Browser/blob/main/screenshots/Screenshot%20(71).png" height="470">
+
+## How to use it
+
+* Clone this repository using ```git clone```
+* Open up a terminal and run  
+
+  ```  
+  npm install  
+  npm run-script custom-start  
+  ```
+  
+* Open a second terminal in the same root directory and run
+  ```node server```
 
 ## Screenshots
 
