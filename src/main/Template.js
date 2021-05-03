@@ -9,7 +9,7 @@ const Template = (props) => {
                 <div className="title">{props.title}</div>                                               
                 <div className="date">Release Date: <span style={{fontWeight: `600`}}>{props.date}</span></div>&nbsp;
                 <div className="points">{props.points}</div>&nbsp;
-                <div className="link"><Link style={{textDecoration: `none`}} href={'/'+props.id}>SEE MORE</Link></div>
+                <div className="link"><Link style={{textDecoration: `none`}} href={'/'+props.id} target="_blank">SEE MORE</Link></div>
             </div>
             <br></br>
         </span>

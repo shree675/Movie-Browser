@@ -151,12 +151,15 @@ class MainPage extends Component{
         else{
             document.getElementById("default").style.display="none";
             document.getElementById("search-results").style.display="block";
-            await fetch('https://api.themoviedb.org/3/search/movie'+this.state.api_key+'&language=en-US&query='+this.state.searchquery+'&page=1&include_adult=false').then(res=>res.json()).then(data=>{            
-                this.setState({
-                    movies: data.results.map((e)=>e)
-                });
-            });
-            console.log(this.state.movies);
+            // setTimeout(function (){
+                (this.state.api_key===''?(console.log('waiting...')):(
+                    await fetch('https://api.themoviedb.org/3/search/movie'+this.state.api_key+'&language=en-US&query='+this.state.searchquery+'&page=1&include_adult=false').then(res=>res.json()).then(data=>{            
+                        this.setState({
+                            movies: data.results.map((e)=>e)
+                        });
+                    })
+                ));
+            // },500);            
         }      
     }
 
