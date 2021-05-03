@@ -63,7 +63,7 @@ class LoginPage extends Component{
 
     async componentDidMount(){
         console.log(config.config.SERVER_URI);
-        await axios.get(`${config.config.SERVER_URI}/login/submituser`).then((e)=>{
+        await axios.get(`/login/submituser`).then((e)=>{
             console.log(e);
             this.setState({
                 users: e.data.map(user=>user.username),

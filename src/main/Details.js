@@ -24,7 +24,7 @@ class DetailsPage extends Component{
 
     async componentDidMount(){
 
-        await axios.get(`${config.config.SERVER_URI}/api/getapi`).then((e)=>{
+        await axios.get(`/api/getapi`).then((e)=>{
             this.setState({
                 api_key: ('?'+e.data[0].api)
             });

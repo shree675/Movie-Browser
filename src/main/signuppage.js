@@ -60,7 +60,8 @@ class SignupPage extends Component{
     }
 
     async componentDidMount(){
-        await axios.get(`${config.config.SERVER_URI}/login/submituser`).then((e)=>{
+        // ${config.config.SERVER_URI}
+        await axios.get(`/login/submituser`).then((e)=>{
             this.setState({
                 users: e.data.map(user=>user.username),
                 passwords: e.data.map(user=>user.password)
@@ -116,8 +117,8 @@ class SignupPage extends Component{
         }
 
         if(x===0){
-            await axios.post(`${config.config.SERVER_URI}/signin/createuser`,user).then(res=>console.log(''));
-            await axios.post(`${config.config.SERVER_URI}/pref/createpreference`,pref).then(res=>console.log(''));
+            await axios.post(`/signin/createuser`,user).then(res=>console.log(''));
+            await axios.post(`/pref/createpreference`,pref).then(res=>console.log(''));
             window.name=this.state.username;
             window.location='/browse';
         }
