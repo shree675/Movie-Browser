@@ -102,3 +102,12 @@ table {
     color: #acacac;
     margin-bottom: 20px;
 }
+
+.tmdb-text {
+    text-align: center;
+    margin-top: 200px;
+    vertical-align: bottom;
+    font-size: 12px;
+    color: grey;
+    height: 100%;
+}
