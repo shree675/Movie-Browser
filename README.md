@@ -16,5 +16,8 @@ This is a full MERN Stack app. The major tools & technologies used are:
 * CORS
 
 ## Features
-* Upon signup, the username and password are stored in a MongoDB database, along with a default genre prefernce for the user. The password is encrypted using modern JS encryption libraries, and is stored in an encrypted form in the database.
-* 
+* Upon signup, the username and password are stored in a MongoDB database, along with a default genre prefernce for the user. The password is encrypted using modern JS encryption libraries, and is stored in an encrypted format in the database.
+* This app hosts a search bar with a search functionality for any movie. To return to the homepage/clear the search page, click on CLEAR SEARCH.
+* Clicking on any movie will result in a new page filled with only the important details and information on that particular movie.
+* On the homepage, a list of latest upcoming movies is displayed in a sliding carousel. Below it, a list of latest movies that fall under the user's selected genre are displayed.
+* The settings page hosts the functionality to change the user's password and genre preferences. These are then updated in the database as well.
