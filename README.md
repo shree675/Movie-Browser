@@ -1,7 +1,7 @@
 <p>
   <img src="https://img.shields.io/badge/react-v17.0.2-ff69b4">&emsp;
   <img src="https://img.shields.io/badge/express-v4.17.1-orange">&emsp;
-  <img src="https://img.shields.io/badge/JavaScript-89.4%25-informational">&emsp;
+  <img src="https://img.shields.io/badge/JavaScript-89.2%25-informational">&emsp;
   <img src="https://img.shields.io/badge/database-mongodb-green">&emsp;
   <img src="https://img.shields.io/badge/build-passing-brightgreen">&emsp;
 </p>
