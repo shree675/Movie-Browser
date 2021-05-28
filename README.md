@@ -11,7 +11,7 @@
 ## About
 Movie Browser is a minimalistic web app that displays information on different movies. It provides a list of latest and upcoming movies based on the user's genre preferences, presented on a smooth carousel.
 
-The user is required to signup/login to use Movie Browser. The user's credentials and preferences are stored on a database (MongoDB Atlas) and are loaded into the app on login.
+The user is required to signup/login to use Movie Browser. The user's credentials and preferences are stored in a database (MongoDB Atlas) and are loaded into the app on login.
 
 ## Packages
 This is a full MERN Stack app. The major tools & technologies used are:
@@ -47,7 +47,7 @@ This is a full MERN Stack app. The major tools & technologies used are:
 
 ## How to use it
 
-* Clone this repository using ```git clone```
+* Clone this repository
 * Open up a terminal and run  
 
   ```  
@@ -56,7 +56,9 @@ This is a full MERN Stack app. The major tools & technologies used are:
   ```
   
 * Open a second terminal in the same root directory and run
-  ```node server```
+  ```  
+  node server  
+  ```
 
 ## Screenshots
 
