@@ -51,13 +51,13 @@ This is a full MERN Stack app. The major tools & technologies used are:
 * Open up a terminal and run  
 
   ```  
-  npm install  
-  npm run-script custom-start  
+  $ npm install  
+  $ npm run-script custom-start  
   ```
   
 * Open a second terminal in the same root directory and run
   ```  
-  node server  
+  $ node server  
   ```
 
 ## Screenshots
